@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <time.h>
+#include <unistd.h>
 
 #define Ncook 6
 #define Noven 5
@@ -11,5 +12,8 @@
 #define Toh 5
 #define Tprep 1
 #define Tbake 10
+
+
+void * prep(void * ar);
 
 
