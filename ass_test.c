@@ -11,7 +11,7 @@ struct timespec t;
 int *times;
 int ovenNum=Noven;
 int cookNum=Ncook;
-pthread_mutex_t c,o,st,mt;
+pthread_mutex_t c,o,st,mt,scl;
 pthread_cond_t condc,condo;
 int summaryTime=0;
 int maxTime=0;
@@ -67,8 +67,12 @@ ovenNum-=1;
 	//Final print
 clock_gettime(CLOCK_REALTIME,&t);
 	times[*num]=t.tv_sec-times[*num];
-	printf("Order whith number %d prepared in %d minutes.\n",
+//LOCKING SCREEN
+pthread_mutex_lock(&scl);
+printf("Order whith number %d prepared in %d minutes.\n",
 	preperator->number,times[*num]);
+pthread_mutex_unlock(&scl);
+//UNLOCKING SCREEN
 //ADDING TO SUMMARY TIME
 pthread_mutex_lock(&st);
 summaryTime+=times[*num];
